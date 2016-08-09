@@ -13,8 +13,7 @@
 #ifdef DEBUG
 #endif
 
-MilliDebouncer::MilliDebouncer(bool initial_state = false,
-        int millis_to_reset = 1000)
+MilliDebouncer::MilliDebouncer(bool initial_state, int millis_to_reset)
 {
     _prev = initial_state;
     _millisToReset = millis_to_reset;

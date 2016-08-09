@@ -7,8 +7,8 @@
 #include <Arduino.h>
 #include <DigitalDebouncer.h>
 
-DigitalDebouncer::DigitalDebouncer(int pin, bool initial_state = false,
-        int millis_to_reset = 1000)
+DigitalDebouncer::DigitalDebouncer(int pin, bool initial_state,
+        int millis_to_reset)
 {
     _pin = pin;
     _debouncer = MilliDebouncer(initial_state, millis_to_reset);
@@ -19,7 +19,7 @@ bool DigitalDebouncer::getDebouncedState() {
     int rawResult = digitalRead(_pin);
     bool result = false;
 
-    if (rawResult = HIGH) {
+    if (rawResult == HIGH) {
         // We read a true
         result = _debouncer.getDebouncedState(true);
     } else {

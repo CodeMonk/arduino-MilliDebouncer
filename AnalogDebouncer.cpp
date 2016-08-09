@@ -9,8 +9,8 @@
 #include <Arduino.h>
 #include <AnalogDebouncer.h>
 
-AnalogDebouncer::AnalogDebouncer(int pin, bool initial_state = false,
-        int millis_to_reset = 1000, double analog_threshold = 0.1)
+AnalogDebouncer::AnalogDebouncer(int pin, bool initial_state,
+        int millis_to_reset, double analog_threshold)
 {
     _pin = pin;
     _analogThreshold = analog_threshold;
