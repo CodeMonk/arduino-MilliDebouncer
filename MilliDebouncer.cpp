@@ -17,11 +17,11 @@ MilliDebouncer::MilliDebouncer(int pin, bool initial_state = false,
         int millis_to_reset = 1000, double analog_threshold = 0.1)
 {
     _pin = pin;
-    _on = initial_state;
+    _prev = initial_state;
     _millisToReset = millis_to_reset;
     _analogThreshold = analog_threshold;
     _elapsed = 0;
-    if (_on) {
+    if (_prev) {
         // We're on, so, set elapsed to zero
         _elapsed = 0;
     } else {
@@ -42,23 +42,23 @@ bool MilliDebouncer::getDebouncedState() {
     Serial.print(": "); Serial.print(rawResult);
     Serial.print(" ("); Serial.print((rawResult > _analogThreshold)?"On ":"Off");
     Serial.print(")  (elapsed="); Serial.print(_elapsed);
-    Serial.print(" prev_state="); Serial.print(_on?"On":"Off");
+    Serial.print(" prev_state="); Serial.print(_prev?"On":"Off");
     Serial.print("): Returning: ");
 #endif
-    if (rawResult > _analogThreshold) {
+    if (rawResult >= _analogThreshold) {
         // We read a true
-        _on = true;
+        _prev = true;
         result = true;
     } else {
         // We read a false -- but -- let the signal settle, maybe
-        if (_on == true) {
+        if (_prev == true) {
             // We were previously on -- reset all counters, and
-            // still return on
+            // still return on, until _elapsed passes our reset threshold
             _elapsed = 0;
-            _on = false;
+            _prev = false;
             result =  true;
         } else {
-            // We were previously off -- check our elapsed time
+            // We were previously off -- check our elapsed time, to see if we're really off
             if ( _elapsed >= _millisToReset ) {
                 // Yay -- we've been off long enough - return false
                 result =  false;

@@ -14,11 +14,11 @@
 
 class MilliDebouncer {
     private:
-        int  _pin;                // Pin to check state of
-        bool _on;                 // if true, pin is on
-        elapsedMillis  _elapsed;  // Number of ticks we've been off for
-        int  _millisToReset;      // Number of ticks to call the signal off
-        double  _analogThreshold; // Values above the threshold are "true"
+        int            _pin;                // Analog pin being read
+        bool           _prev;               // if true, pin was on the last read
+        elapsedMillis  _elapsed;            // Number of ticks we've been off for
+        int            _millisToReset;      // Number of ticks to call the signal off
+        double         _analogThreshold;    // Values above the threshold are "true"
 
     public:
         MilliDebouncer(int pin, bool initial_state=false,
