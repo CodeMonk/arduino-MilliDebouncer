@@ -13,13 +13,11 @@
 #ifdef DEBUG
 #endif
 
-MilliDebouncer::MilliDebouncer(int pin, bool initial_state = false,
-        int millis_to_reset = 1000, double analog_threshold = 0.1)
+MilliDebouncer::MilliDebouncer(bool initial_state = false,
+        int millis_to_reset = 1000)
 {
-    _pin = pin;
     _prev = initial_state;
     _millisToReset = millis_to_reset;
-    _analogThreshold = analog_threshold;
     _elapsed = 0;
     if (_prev) {
         // We're on, so, set elapsed to zero
@@ -33,24 +31,21 @@ MilliDebouncer::MilliDebouncer(int pin, bool initial_state = false,
 #endif
 }
 
-bool MilliDebouncer::getDebouncedState() {
-    double rawResult = analogRead(_pin);
+bool MilliDebouncer::getDebouncedState(bool newState) {
     bool result = false;
 
 #ifdef DEBUG
-    Serial.print("RAW Read port "); Serial.print(_pin);
-    Serial.print(": "); Serial.print(rawResult);
-    Serial.print(" ("); Serial.print((rawResult > _analogThreshold)?"On ":"Off");
-    Serial.print(")  (elapsed="); Serial.print(_elapsed);
-    Serial.print(" prev_state="); Serial.print(_prev?"On":"Off");
-    Serial.print("): Returning: ");
+    Serial.print("New Value: "); Serial.print((newState)?"On ":"Off");
+    Serial.print(" (elapsed="); Serial.print(_elapsed);
+    Serial.print(") prev_state="); Serial.print(_prev?"On":"Off");
+    Serial.print(" Returning: ");
 #endif
-    if (rawResult >= _analogThreshold) {
+    if (newState) {
         // We read a true
         _prev = true;
         result = true;
     } else {
-        // We read a false -- but -- let the signal settle, maybe
+        // We have a false -- but -- let the signal settle, maybe
         if (_prev == true) {
             // We were previously on -- reset all counters, and
             // still return on, until _elapsed passes our reset threshold
