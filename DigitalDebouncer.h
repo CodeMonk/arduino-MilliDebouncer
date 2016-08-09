@@ -20,7 +20,7 @@ class DigitalDebouncer {
 
     public:
         DigitalDebouncer(int pin, bool initial_state=false,
-                int millis_to_reset=1000);
+                unsigned millis_to_reset=1000);
 
         bool getDebouncedState();
 };

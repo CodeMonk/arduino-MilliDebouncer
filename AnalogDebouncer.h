@@ -21,7 +21,7 @@ class AnalogDebouncer {
 
     public:
         AnalogDebouncer(int pin, bool initial_state=false,
-                int millis_to_reset=1000, double analog_threshold=0.1);
+                unsigned millis_to_reset=1000, double analog_threshold=0.1);
 
         bool getDebouncedState();
 };

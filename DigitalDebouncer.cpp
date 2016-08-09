@@ -8,7 +8,7 @@
 #include <DigitalDebouncer.h>
 
 DigitalDebouncer::DigitalDebouncer(int pin, bool initial_state,
-        int millis_to_reset)
+        unsigned millis_to_reset)
 {
     _pin = pin;
     _debouncer = MilliDebouncer(initial_state, millis_to_reset);

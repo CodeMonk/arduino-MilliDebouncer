@@ -15,11 +15,11 @@
 class MilliDebouncer {
     private:
         bool           _prev;               // if true, pin was on the last read
-        int            _millisToReset;      // Number of ticks to call the signal off
+        unsigned       _millisToReset;      // Number of ticks to call the signal off
         elapsedMillis  _elapsed;            // Number of ticks we've been off for
 
     public:
-        MilliDebouncer(bool initial_state=false, int millis_to_reset=1000);
+        MilliDebouncer(bool initial_state=false, unsigned millis_to_reset=1000);
 
         bool getDebouncedState(bool newState);
 };
